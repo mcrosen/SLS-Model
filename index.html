@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>SLS Financial Calculator</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script type="text/javascript" src="main.js"></script>
+  <script src="jquery-3.4.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+  <!-- Begin Left Column -->
+  <div class="row">
+    <div class="col-4 left">
+
+      <!-- Sliders -->
+      <div class="sliders-combined">
+        <div class="slidecontainer">
+          <div class="purch-output">
+            <h3 id="purch-price">Purchase <br>Price</h3><span id="center-line1"></span>
+            <output id="output1"></output>
+          </div>
+          <input id="slider1" type="range" min="15000" max="300000" step="1000" oninput="slider1Change(this.value)">
+
+        </div>
+        <div class="slidecontainer2">
+          <div class="renovation-output">
+            <h3 id="ren-cost">Renovation <br>Cost</h3><span id="center-line2"></span>
+            <output id="output2"></output>
+          </div>
+          <input id="slider2" type="range" min="1000" max="50000" step="1000" oninput="slider2Change(this.value)">
+        </div>
+      </div>
+      <!-- End Sliders -->
+
+      <!-- Loan Term Dropdown -->
+      <div id="dropdown-menu">
+        <label for="loan-length" id="loan-label">LOAN TERM:</label>
+        <select name="months" id="loan-length">
+          <option value="6">6 MONTHS</option>
+          <option value="9">9 MONTHS</option>
+          <option value="12">12 MONTHS</option>
+        </select>
+      </div>
+      <!-- End Loan Term Dropdown -->
+
+      <!-- Temporary Breaks -->
+      <br>
+      <br>
+      <!-- End Temporary Breaks -->
+
+      <!-- Additional Options -->
+      <h3 id="sls-options-header-sls"> SLS Financial </h3>
+      <form class="col-6" action="index.html" method="post">
+        <div id="additionalOptionsSLS">
+          <label for="interestRateSLS">Interest Rate:</label><input type="text" id="interestRateSLS" value=""><br>
+          <label for="pointsSLS">Points:</label><input type="text" id="pointsSLS" value=""><br>
+          <label for="downPaymentSLS">Down Payment:</label><input type="text" id="downPaymentSLS" value="0"><br>
+          <label for="appraisalFeeSLS">Appraisal Fee:</label><input type="text" id="appraisalFeeSLS" value=""><br>
+          <label for="drawFeesSLS">Draw Fees:</label><input type="text" id="drawFeesSLS" value=""><br>
+          <label for="appFeesSLS">Application Fees:</label><input type="text" id="appFeesSLS" value=""><br>
+          <label for="payFreqSLS">Payment Frequency:</label><input type="text" id="payFreqSLS" value="">
+        </div>
+      </form>
+      <!-- End Additional Options -->
+
+      <h3 id="sls-options-header-comp"> Competition </h3>
+      <form class="col-6" action="index.html" method="post">
+        <div id="additionalOptionsCompetition">
+          <label for="interestRateComp">Interest Rate:</label><input type="text" id="interestRateComp" value=""><br>
+          <label for="pointsComp">Points:</label><input type="text" id="pointsComp" value=""><br>
+          <label for="downPaymentComp">Down Payment:</label><input type="text" id="downPaymentComp" value="5"><br>
+          <label for="appraisalFeeComp">Appraisal Fee:</label><input type="text" id="appraisalFeeComp" value=""><br>
+          <label for="drawFeesComp">Draw Fees:</label><input type="text" id="drawFeesComp" value=""><br>
+          <label for="appFeesComp">Application Fees:</label><input type="text" id="appFeesComp" value=""><br>
+          <label for="payFreqComp">Payment Frequency:</label><input type="text" id="payFreqComp" value="">
+        </div>
+      </form>
+
+      <!-- Additional Values -->
+      <div>
+        <h3 id="project-cost">Project Cost</h3>
+        <output id="projCost"></output>
+        <h3 id="arp">After Repaired Value</h3>
+        <button type="button" onclick="projCostCalc()" name="button">Calculate</button>
+      </div>
+      <!-- End Additional Values -->
+
+    </div>
+
+    <!-- End Left Column -->
+
+    <!-- Begin Right Column -->
+
+    <div class="col-8">
+      <div id="logo-space"></div>
+      <!-- Right Container Table -->
+      <table cellpadding="10">
+        <tr id="table-heading">
+          <th>Cash Outlay</th>
+          <th>SLS Financial</th>
+          <th>Competition</th>
+        </tr>
+        <tr id="row1">
+          <td>Total Project Costs</td>
+          <td><output id="totalProjCostSLS"></output></td>
+          <td><output id="totalProjCostCompet"></td>
+        </tr>
+        <tr id="row2">
+          <td>Loan Principal</td>
+          <td><output id="loanPrinciple"></output></td>
+          <td><output id="loanPrincipleComp"></output></td>
+        </tr>
+          <tr id="row3">
+            <td>Out of Pocket Costs</td>
+            <td><output id="outOfPocketCostsSLS"></output></td>
+            <td><output id="outOfPocketCostsComp"></output></td>
+          </tr>
+          <tr id="row4" class="row4">
+            <td>Down Payment</td>
+            <td><output id="downPaymentSLSTotal" ></output></td>
+            <td><output id="downPaymentCompTotal"></output></td>
+          </tr>
+          <tr id="row5" class="row5">
+            <td>Interest Out of Pocket</td>
+            <td><output id="interestOOPSLS"></output></td>
+            <td><output id="interestOOPComp"></output></td>
+          </tr>
+          <tr id="row6" class="row6">
+            <td>Points Out of Pocket</td>
+            <td><output id="pointsOOPSLS"></output></td>
+            <td><output id="pointsOOPComp"></output></td>
+          </tr>
+          <tr id="row7" class="row7">
+            <td>Fees Out of Pocket</td>
+            <td><output id="feesOOPSLS" value="0"></output></td>
+            <td></td>
+          </tr>
+          <!--
+          <tr id="row8">
+            <td>Financing Costs Out of Pocket</td>
+            <td><output id="financingOOPSLS"></output></td>
+            <td>Total Project Costs</td>
+          </tr> -->
+        <tr id="table-heading-middle">
+          <th>Project Profit</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr id="row9">
+          <td>After Repaired Value</td>
+          <td>After Repaired Value</td>
+          <td>After Repaired Value</td>
+        </tr>
+        <tr id="row10">
+          <td>Project Cost</td>
+          <td><output id="projCostExpenseSLS"></td>
+          <td><output id="projCostExpenseComp"></td>
+        </tr>
+        <tr id="row11">
+          <td>Lending Costs</td>
+          <td>After Repaired Value</td>
+          <td>After Repaired Value</td>
+        </tr>
+        <tr id="row12">
+          <td>Total Interest Paid</td>
+          <td><output id="interestSLSTotal"></output></td>
+          <td>Total Project Costs</td>
+        </tr>
+        <tr id="row13">
+          <td>Total Lending Points</td>
+          <td><output id="pointsSLSTotal"></outlook></td>
+          <td>Total Project Costs</td>
+        </tr>
+        <tr id="row14">
+          <td>Total Fees Paid</td>
+          <td>Total Project Costs</td>
+          <td>Total Project Costs</td>
+        </tr>
+        <tr id="row15">
+          <td>Project Profit</td>
+          <td>After Repaired Value</td>
+          <td>After Repaired Value</td>
+        </tr>
+        <tr id="row16">
+          <td>Return On Cash <br>Out Of Pocket</td>
+          <td>After Repaired Value</td>
+          <td>After Repaired Value</td>
+        </tr>
+      </table>
+      <!-- End Right Container Table -->
+
+    </div>
+  </div>
+
+  <!-- End Right Column -->
+
+</body>
+
+</html>
